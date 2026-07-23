@@ -14,11 +14,15 @@
 
 > *"We don't just move data — we build truth."*
 
+<p align="center">
+<img src="images/University-Telegram-Bot-Real-Time-Data-Pipeline.png" width="98%">
+</p>
+
 </div>
 
 ---
 
-## 📋 Table of Contents
+## Table of Contents
 
 - [Overview](#overview)
 - [Audience](#audience)
