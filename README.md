@@ -41,7 +41,6 @@
 - [Testing](#testing)
 - [Linting & Formatting](#linting--formatting)
 - [CI/CD](#cicd)
-- [Deployment](#deployment)
 - [Environment Variables](#environment-variables)
 ---
 
@@ -809,44 +808,6 @@ jobs:
             docker compose pull
             docker compose up -d --build
 ```
-
----
-
-## Deployment
-
-### Development
-
-```bash
-docker compose up -d
-```
-
-### Production Checklist
-
-Before going to production, complete the following:
-
-- [ ] Load all secrets from environment variables or a Secrets Manager (never hardcode)
-- [ ] Set `KAFKA_DEFAULT_REPLICATION_FACTOR: 3` in `docker-compose.yml` and run a 3-broker cluster
-- [ ] Enable Kafka `ssl` and `sasl` for broker authentication
-- [ ] Replace `ssl="require"` with full SSL certificate verification for PostgreSQL
-- [ ] Set `KAFKA_ENABLED=true` and confirm fallback behaviour is tested
-- [ ] Scale the DB consumer: `docker compose up --scale db-consumer=3`
-- [ ] Configure log aggregation (e.g., Datadog, Loki)
-- [ ] Set up alerting on the `edu.dlq` topic (dead-letter queue)
-- [ ] Schedule `fn_purge_expired_bot_states()` as a cron job (every 30 minutes)
-- [ ] Set up `REFRESH MATERIALIZED VIEW CONCURRENTLY mv_student_schedule` on a cron job (every 5 minutes)
-
-### Horizontal Scaling
-
-The DB consumer supports horizontal scaling natively. Kafka rebalances partitions automatically across instances:
-
-```bash
-# Scale to 3 DB consumer instances (requires ≥ 3 partitions per topic)
-docker compose up -d --scale db-consumer=3
-```
-
-### Kubernetes (Placeholder)
-
-A Helm chart and Kubernetes manifests for production deployment are planned. See [Future Improvements](#known-issues--future-improvements).
 
 ---
 
